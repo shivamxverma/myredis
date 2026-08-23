@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"io"
 	"net"
+	"strings"
 )
 
 func main() {
@@ -32,7 +33,11 @@ func ReadData(buffer []byte, conn net.Conn) (int, error) {
 	return conn.Read(buffer)
 }
 
-func WriteData(conn net.Conn) (int, error) {
+func WriteData(input string, conn net.Conn) (int, error) {
+	fmt.Println("Processing the input")
+	if strings.HasPrefix(input, "SET") {
+		return conn.Write([]byte("Yes Write the data into Server\n"))
+	}
 	return conn.Write([]byte("Hello from server\n"))
 }
 
@@ -54,7 +59,7 @@ func handleConnection(conn net.Conn) {
 
 		fmt.Println("Received:", string(buffer[:n]))
 
-		_, err = WriteData(conn)
+		_, err = WriteData(string(buffer[:n]),conn)
 
 		if err != nil {
 			fmt.Println("write error:", err)
