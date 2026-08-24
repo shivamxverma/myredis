@@ -8,6 +8,8 @@ import (
 	"sync"
 )
 
+// Store added 
+
 var (
 	store = make(map[string]string)
 	mu    sync.RWMutex
@@ -48,6 +50,8 @@ func WriteData(input string, conn net.Conn) (int, error) {
 	}
 
 	command := strings.ToUpper(fields[0])
+
+	// Logic added 
 
 	switch command {
 	case "SET":
